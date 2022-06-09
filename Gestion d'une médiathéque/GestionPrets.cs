@@ -11,7 +11,7 @@ namespace Gestion_d_une_médiathéque
     public class GestionPrets
     {
 
-        string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
+        string cinstr = Program.cinstr;
         SqlConnection cn = new SqlConnection();
         SqlCommand cmd = new SqlCommand();
         

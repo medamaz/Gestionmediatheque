@@ -10,15 +10,11 @@ namespace Gestion_d_une_médiathéque
 {
     public class Adherent
     {
-
-        
-
         int num;
         string nom;
         string prenom;
         string adress;
         string email;
-
         public Adherent()
         {
         }
@@ -69,8 +65,7 @@ namespace Gestion_d_une_médiathéque
 
         public static void ajouterAdherent(params Adherent[] ad)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-            SqlConnection cn = new SqlConnection();
+            string cinstr = Program.cinstr; SqlConnection cn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
 
             foreach (Adherent a in ad)
@@ -102,8 +97,7 @@ namespace Gestion_d_une_médiathéque
 
         public static void supprimerAdherent(int id)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-            SqlConnection cn = new SqlConnection();
+            string cinstr = Program.cinstr; SqlConnection cn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
             try
             {
@@ -128,8 +122,7 @@ namespace Gestion_d_une_médiathéque
 
         public static void modifierAdherent(int id,Adherent a)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-            SqlConnection cn = new SqlConnection();
+            string cinstr = Program.cinstr; SqlConnection cn = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
 
 
@@ -159,8 +152,7 @@ namespace Gestion_d_une_médiathéque
             
         public static Adherent rechercherAdherent(int id)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-
+            string cinstr = Program.cinstr;
             try
             {
                 Adherent ad = new Adherent();

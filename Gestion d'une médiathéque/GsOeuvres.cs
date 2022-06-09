@@ -39,8 +39,11 @@ namespace Gestion_d_une_médiathéque
 
         private void button1_Click(object sender, EventArgs e)
         {
-            s.ajouterOeuvres(textBox1.Text, textBox2.Text, textBox3.Text, (int)numericUpDown1.Value, comboBox2.SelectedItem.ToString());
-            dataGridView1.DataSource = Support.afficherOeuvres();
+            if(textBox1.Text!=""&& textBox3.Text != "" && textBox2.Text != "")
+            {
+                s.ajouterOeuvres(textBox1.Text, textBox2.Text, textBox3.Text, (int)numericUpDown1.Value, comboBox2.SelectedItem.ToString());
+                dataGridView1.DataSource = Support.afficherOeuvres();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

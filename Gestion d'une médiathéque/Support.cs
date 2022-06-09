@@ -10,7 +10,7 @@ namespace Gestion_d_une_médiathéque
 {
     public class Support
     {
-        string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
+        string cinstr = Program.cinstr;
         SqlConnection cn = new SqlConnection();
         SqlCommand cmd = new SqlCommand();
         public Support()
@@ -148,34 +148,42 @@ namespace Gestion_d_une_médiathéque
 
         public static DataTable rechercherOeuvres(string title, string auteur, string editeur, int year)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-
+            string cinstr = Program.cinstr;
             try
             {
                 DataTable dt = new DataTable();
                 string rq = "";
                 SqlDataAdapter adapter = new SqlDataAdapter();
-                if (title != "" || auteur != "" || editeur != "" || year >1900)
+                if (title != "" && auteur != "" && editeur != "" && year > 1900)
                 {
                     rq = "select * from Oeuvre where";
                     if (title != "")
                     {
-                        rq =String.Format("{0} title = {1}",rq,title);
+                        rq = String.Format("{0} title = '{1}' And auteur = '{2}' And editeur = '{3}' And  anneeS = {4}", rq, title,auteur,editeur,year);
+
+                    }
+                }
+                else if (title != "" || auteur != "" || editeur != "" || year >1900)
+                {
+                    rq = "select * from Oeuvre where";
+                    if (title != "")
+                    {
+                        rq =String.Format("{0} title = '{1}'",rq,title);
                         
                     }
                     if (auteur != "")
                     {
-                        rq = String.Format("{0} auteur = {1}", rq, auteur);
+                        rq = String.Format("{0} auteur = '{1}'", rq, auteur);
 
                     }
                     if (editeur != "")
                     {
-                        rq = String.Format("{0} editeur = {1}", rq, editeur);
+                        rq = String.Format("{0} editeur = '{1}'", rq, editeur);
 
                     }
                     if (year > 1900)
                     {
-                        rq = String.Format("{0} anneeS = {1}", rq, year);
+                        rq = String.Format("{0} anneeS = '{1}'", rq, year);
 
                     }
                 }
@@ -200,8 +208,7 @@ namespace Gestion_d_une_médiathéque
 
         public static Oeuvre rechercherOeuvres(int id)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-
+            string cinstr = Program.cinstr;
             try
             {
                 Oeuvre oeuvre = new Oeuvre();
@@ -231,8 +238,7 @@ namespace Gestion_d_une_médiathéque
 
         public static Oeuvre rechercherOeuvres(string title)
         {
-            string cinstr = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\moami\source\repos\DB\GestionMediatheque.mdf;Integrated Security = True";
-
+            string cinstr = Program.cinstr;
             try
             {
                 Oeuvre oeuvre = new Oeuvre();
@@ -355,6 +361,29 @@ namespace Gestion_d_une_médiathéque
             finally
             {
                 cn.Close();
+            }
+        }
+
+        public static DataTable afficherOeuvresCat(string rq)
+        {
+            string cinstr = Program.cinstr;
+
+            SqlDataAdapter adapter = new SqlDataAdapter();
+
+            DataTable dt = new DataTable();
+            try
+            {
+                adapter = new SqlDataAdapter(rq, cinstr)
+                {
+                    MissingSchemaAction = MissingSchemaAction.AddWithKey
+                };
+                adapter.Fill(dt);
+                SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+                return dt;
+            }
+            catch
+            {
+                return afficherOeuvres();
             }
         }
     }
